@@ -22,10 +22,10 @@ USE `pizzeria` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzeria`.`botigues` (
   `botiga_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `adresa` VARCHAR(255) NULL DEFAULT NULL,
+  `adresa` VARCHAR(50) NULL DEFAULT NULL,
   `codi_postal` VARCHAR(10) NULL DEFAULT NULL,
-  `localitat` VARCHAR(255) NULL DEFAULT NULL,
-  `provincia` VARCHAR(255) NULL DEFAULT NULL,
+  `localitat` VARCHAR(50) NULL DEFAULT NULL,
+  `provincia` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`botiga_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
@@ -36,7 +36,7 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzeria`.`categories` (
   `categoria_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NULL DEFAULT NULL,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
   PRIMARY KEY (`categoria_id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4;
@@ -47,12 +47,12 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzeria`.`clients` (
   `client_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NULL DEFAULT NULL,
-  `cognoms` VARCHAR(255) NULL DEFAULT NULL,
-  `adresa` VARCHAR(255) NULL DEFAULT NULL,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
+  `cognoms` VARCHAR(50) NULL DEFAULT NULL,
+  `adresa` VARCHAR(50) NULL DEFAULT NULL,
   `codi_postal` VARCHAR(10) NULL DEFAULT NULL,
-  `localitat` VARCHAR(255) NULL DEFAULT NULL,
-  `provincia` VARCHAR(255) NULL DEFAULT NULL,
+  `localitat` VARCHAR(50) NULL DEFAULT NULL,
+  `provincia` VARCHAR(50) NULL DEFAULT NULL,
   `telefon` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`client_id`))
 ENGINE = InnoDB
@@ -87,9 +87,9 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzeria`.`productes` (
   `producte_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NULL DEFAULT NULL,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
   `descripcio` TEXT NULL DEFAULT NULL,
-  `imatge` VARCHAR(255) NULL DEFAULT NULL,
+  `imatge` VARCHAR(50) NULL DEFAULT NULL,
   `preu` FLOAT NULL DEFAULT NULL,
   `categoria_id` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`producte_id`),
@@ -125,8 +125,8 @@ DEFAULT CHARACTER SET = utf8mb4;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizzeria`.`empleats` (
   `empleat_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(255) NULL DEFAULT NULL,
-  `cognoms` VARCHAR(255) NULL DEFAULT NULL,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
+  `cognoms` VARCHAR(50) NULL DEFAULT NULL,
   `NIF` VARCHAR(20) NULL DEFAULT NULL,
   `telefon` VARCHAR(20) NULL DEFAULT NULL,
   `rol` VARCHAR(50) NULL DEFAULT NULL,
