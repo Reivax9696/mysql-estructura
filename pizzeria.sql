@@ -3,25 +3,25 @@ USE pizzeria;
 
 CREATE TABLE clients (
     client_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
-    cognoms VARCHAR(255),
-    adresa VARCHAR(255),
+    nom VARCHAR(50),
+    cognoms VARCHAR(50),
+    adresa VARCHAR(50),
     codi_postal VARCHAR(10),
-    localitat VARCHAR(255),
-    provincia VARCHAR(255),
+    localitat VARCHAR(50),
+    provincia VARCHAR(50),
     telefon VARCHAR(20)
 );
 
 CREATE TABLE categories (
     categoria_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255)
+    nom VARCHAR(50)
 );
 
 CREATE TABLE productes (
     producte_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
+    nom VARCHAR(50),
     descripcio TEXT,
-    imatge VARCHAR(255),
+    imatge VARCHAR(50),
     preu FLOAT,
     categoria_id INT,
     FOREIGN KEY (categoria_id) REFERENCES categories(categoria_id)
@@ -29,10 +29,10 @@ CREATE TABLE productes (
 
 CREATE TABLE botigues (
     botiga_id INT AUTO_INCREMENT PRIMARY KEY,
-    adresa VARCHAR(255),
+    adresa VARCHAR(50),
     codi_postal VARCHAR(10),
-    localitat VARCHAR(255),
-    provincia VARCHAR(255)
+    localitat VARCHAR(50),
+    provincia VARCHAR(50)
 );
 
 CREATE TABLE comandes (
@@ -48,8 +48,8 @@ CREATE TABLE comandes (
 
 CREATE TABLE empleats (
     empleat_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
-    cognoms VARCHAR(255),
+    nom VARCHAR(50),
+    cognoms VARCHAR(50),
     NIF VARCHAR(20),
     telefon VARCHAR(20),
     rol VARCHAR(50),
