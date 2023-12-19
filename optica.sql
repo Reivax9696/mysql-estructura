@@ -1,59 +1,121 @@
-CREATE DATABASE optica;
-USE optica;
+-- MySQL Workbench Forward Engineering
 
-CREATE TABLE proveidors (
-    proveidor_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
-    adreca_carrer VARCHAR(255),
-    adreca_numero VARCHAR(255),
-    adreca_pis VARCHAR(255),
-    adreca_porta VARCHAR(255),
-    ciutat VARCHAR(255),
-    codi_postal VARCHAR(255),
-    pais VARCHAR(255),
-    telefon VARCHAR(255),
-    fax VARCHAR(255),
-    NIF VARCHAR(255)
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-CREATE TABLE ulleres (
-    ulleres_id INT AUTO_INCREMENT PRIMARY KEY,
-    marca VARCHAR(255),
-    graduacio_vidre_dreta FLOAT,
-    graduacio_vidre_esquerra FLOAT,
-    tipus_montura VARCHAR(255),
-    color_montura VARCHAR(255),
-    color_vidre_esquerra VARCHAR(255),
-    color_vidre_dreta VARCHAR(255),
-    preu FLOAT,
-    proveidor_id INT,
-    FOREIGN KEY (proveidor_id) REFERENCES proveidors(proveidor_id)
-);
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema optica
+-- -----------------------------------------------------
 
-CREATE TABLE clients (
-    client_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255),
-    adreca_postal VARCHAR(255),
-    telefon VARCHAR(255),
-    correu_electronic VARCHAR(255),
-    data_registre DATE,
-    client_recomanador_id INT,
-    FOREIGN KEY (client_recomanador_id) REFERENCES clients(client_id)
-);
+CREATE SCHEMA IF NOT EXISTS `optica` DEFAULT CHARACTER SET utf8mb4 ;
+USE `optica` ;
 
-CREATE TABLE empleats (
-    empleat_id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(255)
-);
+-- -----------------------------------------------------
+-- Table `optica`.`clients`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `optica`.`clients` (
+  `client_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
+  `adreca_postal` VARCHAR(50) NULL DEFAULT NULL,
+  `telefon` VARCHAR(50) NULL DEFAULT NULL,
+  `correu_electronic` VARCHAR(50) NULL DEFAULT NULL,
+  `data_registre` DATE NULL DEFAULT NULL,
+  `client_recomanador_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`),
+  INDEX `client_recomanador_id` (`client_recomanador_id` ASC) VISIBLE,
+  CONSTRAINT `clients_ibfk_1`
+    FOREIGN KEY (`client_recomanador_id`)
+    REFERENCES `optica`.`clients` (`client_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
 
-CREATE TABLE vendes (
-    venda_id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT,
-    empleat_id INT,
-    ulleres_id INT,
-    data_venda DATE,
-    periode_vendes VARCHAR(255),
-    FOREIGN KEY (client_id) REFERENCES clients(client_id),
-    FOREIGN KEY (empleat_id) REFERENCES empleats(empleat_id),
-    FOREIGN KEY (ulleres_id) REFERENCES ulleres(ulleres_id)
-);
+
+-- -----------------------------------------------------
+-- Table `optica`.`empleats`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `optica`.`empleats` (
+  `empleat_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`empleat_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `optica`.`proveidors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `optica`.`proveidors` (
+  `proveidor_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nom` VARCHAR(50) NULL DEFAULT NULL,
+  `adreca_carrer` VARCHAR(50) NULL DEFAULT NULL,
+  `adreca_numero` VARCHAR(50) NULL DEFAULT NULL,
+  `adreca_pis` VARCHAR(50) NULL DEFAULT NULL,
+  `adreca_porta` VARCHAR(50) NULL DEFAULT NULL,
+  `ciutat` VARCHAR(50) NULL DEFAULT NULL,
+  `codi_postal` VARCHAR(50) NULL DEFAULT NULL,
+  `pais` VARCHAR(50) NULL DEFAULT NULL,
+  `telefon` VARCHAR(50) NULL DEFAULT NULL,
+  `fax` VARCHAR(50) NULL DEFAULT NULL,
+  `NIF` VARCHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`proveidor_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `optica`.`ulleres`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `optica`.`ulleres` (
+  `ulleres_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `marca` VARCHAR(50) NULL DEFAULT NULL,
+  `graduacio_vidre_dreta` FLOAT NULL DEFAULT NULL,
+  `graduacio_vidre_esquerra` FLOAT NULL DEFAULT NULL,
+  `tipus_montura` VARCHAR(50) NULL DEFAULT NULL,
+  `color_montura` VARCHAR(50) NULL DEFAULT NULL,
+  `color_vidre_esquerra` VARCHAR(50) NULL DEFAULT NULL,
+  `color_vidre_dreta` VARCHAR(50) NULL DEFAULT NULL,
+  `preu` FLOAT NULL DEFAULT NULL,
+  `proveidor_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`ulleres_id`),
+  INDEX `proveidor_id` (`proveidor_id` ASC) VISIBLE,
+  CONSTRAINT `ulleres_ibfk_1`
+    FOREIGN KEY (`proveidor_id`)
+    REFERENCES `optica`.`proveidors` (`proveidor_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+-- -----------------------------------------------------
+-- Table `optica`.`vendes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `optica`.`vendes` (
+  `venda_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `client_id` INT(11) NULL DEFAULT NULL,
+  `empleat_id` INT(11) NULL DEFAULT NULL,
+  `ulleres_id` INT(11) NULL DEFAULT NULL,
+  `data_venda` DATE NULL DEFAULT NULL,
+  `periode_vendes` VARCHAR(50) NULL DEFAULT NULL,
+  PRIMARY KEY (`venda_id`),
+  INDEX `client_id` (`client_id` ASC) VISIBLE,
+  INDEX `empleat_id` (`empleat_id` ASC) VISIBLE,
+  INDEX `ulleres_id` (`ulleres_id` ASC) VISIBLE,
+  CONSTRAINT `vendes_ibfk_1`
+    FOREIGN KEY (`client_id`)
+    REFERENCES `optica`.`clients` (`client_id`),
+  CONSTRAINT `vendes_ibfk_2`
+    FOREIGN KEY (`empleat_id`)
+    REFERENCES `optica`.`empleats` (`empleat_id`),
+  CONSTRAINT `vendes_ibfk_3`
+    FOREIGN KEY (`ulleres_id`)
+    REFERENCES `optica`.`ulleres` (`ulleres_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
